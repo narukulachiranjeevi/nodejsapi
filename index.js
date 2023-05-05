@@ -54,6 +54,17 @@ app.get('/customer/:id', async(req,res) => {
     catch(e){
         res.status(500).json(e.message);
     }
+});
+
+app.delete('/customer/:id', async(req,res) => {
+    const {id} = req.params;
+    try{
+        const result = await customer.deleteOne({_id:id});
+        res.status(200).json(result.deletedCount);
+    }
+    catch(e){
+        res.status(500).json("Error occured"+e.message);
+    }
 })
 
 const start = async() => {
