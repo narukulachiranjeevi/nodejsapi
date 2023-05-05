@@ -22,13 +22,28 @@ app.post('/customer', async(req,res) => {
     try{
         const customers = new customer(req.body);
         const result = await customers.save();
-        res.json(result);
+        res.status(201).send(customers);
     }
     catch(err){
         res.status(500).json(err.message);
     }
 })
 
+app.get('/customer/:id', async(req,res) => {
+    const {id} =req.params;
+    try{
+        const result = await customer.findById(id);
+        if(!result){
+            res.status(404).send('customer not found');
+        }
+        else{
+            res.send(result);
+        }
+    }
+    catch(e){
+        res.status(500).json(e.message);
+    }
+})
 
 const start = async() => {
     try{
