@@ -29,6 +29,17 @@ app.post('/customer', async(req,res) => {
     }
 })
 
+app.put('/customer/:id',async(req,res) => {
+    const {id} = req.params;
+    try{
+        const result = await customer.replaceOne({_id:id},req.body);
+        res.json(result.modifiedCount);
+    }
+    catch(e){
+        res.status(500).json("Internal eroor" + e.message);
+    }
+});
+
 app.get('/customer/:id', async(req,res) => {
     const {id} =req.params;
     try{
